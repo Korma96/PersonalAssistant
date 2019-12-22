@@ -1,0 +1,96 @@
+{
+	"alarm/cancel_alarm": {
+		"all_slots": [
+			"datetime"
+		],
+		"required_slots": [
+			"datetime"
+		],
+		"responses": [
+			"Your alarm is canceled",
+			"Alarm {datetime} canceled"
+		]
+	},
+	"alarm/modify_alarm": {
+		"all_slots": [
+			"datetime"
+		],
+		"required_slots": [
+			"datetime"
+		],
+		"responses": [
+			"Your alarm is modified",
+			"Modifying your alarm {datetime}"
+		]
+	},
+	"alarm/set_alarm": {
+		"all_slots": [
+			"datetime",
+			"timer/attributes",
+			"alarm/alarm_modifier"
+		],
+		"required_slots": [
+			"datetime"
+		],
+		"responses": [
+			"Your alarm is set",
+			"Alarm set {datetime}",
+			"Alarm set {datetime} {timer/attributes} {alarm/alarm_modifier}",
+			"Alarm will be {datetime} {timer/attributes} {alarm/alarm_modifier}"
+		]
+	},
+	"alarm/show_alarms": {
+		"all_slots": [
+			"datetime"
+		],
+		"required_slots": [
+			"datetime"
+		],
+		"responses": [
+			"Your alarms: ...",
+			"Showing your alarms {datetime}"
+		]
+	},
+	"reminder/cancel_reminder": {
+		"all_slots": [
+			"datetime"
+		],
+		"required_slots": [
+			"datetime"
+		],
+		"responses": [
+			"Your reminder is canceled",
+			"Reminder {datetime} canceled"
+		]
+	},
+	"reminder/set_reminder": {
+		"all_slots": [
+			"datetime",
+			"reminder/todo",
+			"reminder/recurring_period"
+		],
+		"required_slots": [
+			"datetime"
+		],
+		"responses": [
+			"Reminder {reminder/todo} set {datetime}",
+			"Reminder set {datetime}",
+			"Reminder {reminder/todo} set {datetime} repeat {reminder/recurring_period}"
+		]
+	},
+	"reminder/show_reminders": {
+		"all_slots": [
+			"datetime",
+			"reminder/reference"
+		],
+		"required_slots": [
+			"datetime"
+		],
+		"responses": [
+			"Your reminders: ...",
+			"Showing your reminders {datetime}",
+			"Showing {reminder/reference} reminder(s)",
+			"Showing {reminder/reference} {datetime} reminder(s)"
+		]
+	}
+}

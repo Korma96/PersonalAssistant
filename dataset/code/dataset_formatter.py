@@ -18,8 +18,9 @@ intents: {
 '''
 
 
-def format(input_path, output_path, desired_intent_names: list):
+def format(input_path, output_path, intent_config):
     # if desired_intent_names is empty list then all intents will be added to output
+    desired_intent_names = intent_config.keys()
     are_all_intents_desired = len(desired_intent_names) == 0
 
     with open(input_path, 'r') as tsv_file:
@@ -52,12 +53,13 @@ def format(input_path, output_path, desired_intent_names: list):
                         start_char_index = eval(splitted_slot[0])
                         end_char_index = eval(splitted_slot[1])
                         slot_name = splitted_slot[2]
-                        if slot_name not in intent[const.SLOTS]:
-                            intent[const.SLOTS][slot_name] = []
+                        if are_all_intents_desired or slot_name in intent_config[intent_name][const.ALL_SLOTS]:
+                            if slot_name not in intent[const.SLOTS]:
+                                intent[const.SLOTS][slot_name] = []
 
-                        slot_value = request[start_char_index:end_char_index]
-                        if slot_value not in intent[const.SLOTS][slot_name]:
-                            intent[const.SLOTS][slot_name].append(slot_value)
+                            slot_value = request[start_char_index:end_char_index]
+                            if slot_value not in intent[const.SLOTS][slot_name]:
+                                intent[const.SLOTS][slot_name].append(slot_value)
 
     json_str = json.dumps(intents, indent=True)
     with open(output_path, 'w+') as json_file:

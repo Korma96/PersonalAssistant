@@ -2,22 +2,6 @@ import tflearn
 import tensorflow as tf
 
 
-# to do: should not be independent method
-def create_trained_model(train_x, train_y):
-    model = create_model([None, len(train_x[0])], len(train_y[0]))
-    # Start training (apply gradient descent algorithm)
-    model.fit(train_x, train_y, n_epoch=1000, batch_size=8, show_metric=True)
-    model.save('data/model.tflearn')
-    return model
-
-
-def load_model(train_x_data_shape, train_y_data_shape):
-    # load our saved model
-    model = create_model(train_x_data_shape, train_y_data_shape)
-    model.load('data/model.tflearn')
-    return model
-
-
 def create_model(train_x_data_shape, train_y_data_shape):
     # reset underlying graph data
     tf.reset_default_graph()

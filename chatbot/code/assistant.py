@@ -15,6 +15,7 @@ class Assistant:
         self.stemmer = LancasterStemmer()
         self.model = model
         self.intent_config = intent_config
+        self.intent_names = list(intent_config.keys())
         self.words = all_words
         self.slots = slots
 
@@ -27,7 +28,7 @@ class Assistant:
         results.sort(key=lambda x: x[1], reverse=True)
         return_list = []
         for result in results:
-            return_list.append((self.classes[result[0]], result[1]))
+            return_list.append((self.intent_names[result[0]], result[1]))
         # return tuple of intent and probability
         return return_list
 

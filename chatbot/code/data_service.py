@@ -5,6 +5,7 @@ import random
 import pickle
 import json as j
 import chatbot.code.constants as const
+import copy
 
 
 def read_intent_configuration(path):
@@ -19,30 +20,37 @@ def process_intent_data(intents_path):
 
     all_words = []
     tokenized_requests = []
-    ignore_words = ['?']
+    ignore_words = ['?', '.', ',', '!']
+    stemmer = LancasterStemmer()
 
+    print('Intent data processing started')
+    intents_sum = float(len(list(intents.keys())))
+    counter = 0.0
     # loop through each request in intents
     for intent_name in intents.keys():
         for request in intents[intent_name][const.REQUESTS]:
 
             # tokenize each word in the sentence
-            w = nltk.word_tokenize(request)
-
+            words = nltk.word_tokenize(request)
+            # stem and lower each word
+            words = [stemmer.stem(w.lower()) for w in words if w not in ignore_words]
             # add to our words list
-            all_words.extend(w)
+            all_words.extend(words)
 
-            tokenized_requests.append((w, intent_name))
+            tokenized_requests.append((words, intent_name))
+
+        counter += 1
+        print("{0:.2f}".format(counter / intents_sum * 100) + '%')
+
+    print('Intent data processing finished')
 
     for intent_name in intents.keys():
         # remove unnecessary objects from memory
         del intents[intent_name][const.REQUESTS]
-
     # only slots remain in dict
     slots = intents
 
-    stemmer = LancasterStemmer()
-    # stem and lower each word and remove duplicates
-    all_words = [stemmer.stem(w.lower()) for w in all_words if w not in ignore_words]
+    # remove duplicates
     all_words = sorted(list(set(all_words)))
 
     return tokenized_requests, all_words, slots
@@ -53,34 +61,38 @@ def create_training_data(tokenized_requests, intent_names, all_words):
     # create our training data
     training = []
     # create an empty array for our output
-    output_empty = [0] * len(intent_names)
+    output_empty = list([0] * len(intent_names))
+    # output is '0' for each intent and '1' for current intent
+    output_rows = {}
+    for i in range(len(intent_names)):
+        output_empty_copy = copy.deepcopy(output_empty)
+        output_empty_copy[i] = 1
+        output_rows[intent_names[i]] = output_empty_copy
 
-    print('Data processing started')
-    documents_num = float(len(tokenized_requests))
+    print('Training data processing started')
+    requests_sum = float(len(tokenized_requests))
     counter = 0.0
     # training set, bag of words for each sentence
-    for doc in tokenized_requests:
+    for request in tokenized_requests:
         # initialize our bag of words
         bag = []
-        # list of tokenized words for the pattern
-        pattern_words = doc[0]
-        # stem each word. to do: this can be done in earlier step
-        pattern_words = [stemmer.stem(word.lower()) for word in pattern_words]
+        # list of tokenized words
+        request_words = request[0]
         # create our bag of words array
-        for w in all_words:
-            bag.append(1) if w in pattern_words else bag.append(0)
+        for word in all_words:
+            if word in request_words:
+                bag.append(1)
+            else:
+                bag.append(0)
 
-        # output is a '0' for each intent and '1' for current intent
-        output_row = list(output_empty)
-        output_row[intent_names.index(doc[1])] = 1
-
+        output_row = output_rows[request[1]]
         training.append([bag, output_row])
 
         counter += 1
         if counter % 100 == 0:
-            print("{0:.2f}".format(counter / documents_num * 100) + '%')
+            print("{0:.2f}".format(counter / requests_sum * 100) + '%')
 
-    print('Data processing finished')
+    print('Training data processing finished')
 
     # shuffle our features and turn into np.array
     random.shuffle(training)
@@ -98,9 +110,9 @@ def save_training_data(all_words, slots, train_x, train_y):
                 open("data/training_data", "wb"))
 
 
-def load_training_data():
+def load_training_data(path):
     # restore all of our data structures
-    data = pickle.load(open("training_data", "rb"))
+    data = pickle.load(open(path, "rb"))
     all_words = data['all_words']
     slots = data['slots']
     train_x = data['train_x']
