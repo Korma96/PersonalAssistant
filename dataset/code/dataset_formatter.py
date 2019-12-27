@@ -1,6 +1,7 @@
 import json
 import chatbot.code.constants as const
 
+
 '''
 intents: {
     intent_name: {
@@ -40,26 +41,32 @@ def format(input_path, output_path, intent_config):
                 intents[intent_name] = {const.SLOTS: {}, const.REQUESTS: []}
 
             intent = intents[intent_name]
-            request = parsed_line[2]
-            # dataset contains duplicate requests
+            request = parsed_line[2].lower()
+            slots_csv = parsed_line[1]
+            if slots_csv:
+                slots = slots_csv.split(',')
+                parsed_slots = []
+                for slot in slots:
+                    splitted_slot = slot.split(':')
+                    start_char_index = eval(splitted_slot[0])
+                    end_char_index = eval(splitted_slot[1])
+                    slot_name = splitted_slot[2]
+                    if are_all_intents_desired or slot_name in intent_config[intent_name][const.ALL_SLOTS]:
+                        if slot_name not in intent[const.SLOTS]:
+                            intent[const.SLOTS][slot_name] = []
+
+                        slot_value = request[start_char_index:end_char_index]
+                        if slot_value not in intent[const.SLOTS][slot_name]:
+                            intent[const.SLOTS][slot_name].append(slot_value)
+                        parsed_slots.append((slot_name, slot_value))
+
+                for parsed_slot in parsed_slots:
+                    slot_name = parsed_slot[0]
+                    slot_value = parsed_slot[1]
+                    request = request.replace(slot_value, slot_name, 1)
+
             if request not in intent[const.REQUESTS]:
                 intent[const.REQUESTS].append(request)
-
-                slots_csv = parsed_line[1]
-                if slots_csv:
-                    slots = slots_csv.split(',')
-                    for slot in slots:
-                        splitted_slot = slot.split(':')
-                        start_char_index = eval(splitted_slot[0])
-                        end_char_index = eval(splitted_slot[1])
-                        slot_name = splitted_slot[2]
-                        if are_all_intents_desired or slot_name in intent_config[intent_name][const.ALL_SLOTS]:
-                            if slot_name not in intent[const.SLOTS]:
-                                intent[const.SLOTS][slot_name] = []
-
-                            slot_value = request[start_char_index:end_char_index]
-                            if slot_value not in intent[const.SLOTS][slot_name]:
-                                intent[const.SLOTS][slot_name].append(slot_value)
 
     json_str = json.dumps(intents, indent=True)
     with open(output_path, 'w+') as json_file:

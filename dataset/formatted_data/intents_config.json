@@ -73,8 +73,8 @@
 			"datetime"
 		],
 		"responses": [
-			"Reminder {reminder/todo} set {datetime}",
 			"Reminder set {datetime}",
+			"Reminder {reminder/todo} set {datetime}",
 			"Reminder {reminder/todo} set {datetime} repeat {reminder/recurring_period}"
 		]
 	},
@@ -87,7 +87,7 @@
 			"datetime"
 		],
 		"responses": [
-			"Your reminders: ...",
+			"Here are your reminders: ...",
 			"Showing your reminders {datetime}",
 			"Showing {reminder/reference} reminder(s)",
 			"Showing {reminder/reference} {datetime} reminder(s)"

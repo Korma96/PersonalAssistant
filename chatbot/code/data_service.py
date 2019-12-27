@@ -1,10 +1,9 @@
-import nltk
-from nltk.stem.lancaster import LancasterStemmer
 import numpy as np
 import random
 import pickle
 import json as j
 import chatbot.code.constants as const
+import chatbot.code.helpers as helpers
 import copy
 
 
@@ -20,23 +19,17 @@ def process_intent_data(intents_path):
 
     all_words = []
     tokenized_requests = []
-    ignore_words = ['?', '.', ',', '!']
-    stemmer = LancasterStemmer()
 
     print('Intent data processing started')
     intents_sum = float(len(list(intents.keys())))
     counter = 0.0
+
     # loop through each request in intents
     for intent_name in intents.keys():
         for request in intents[intent_name][const.REQUESTS]:
-
-            # tokenize each word in the sentence
-            words = nltk.word_tokenize(request)
-            # stem and lower each word
-            words = [stemmer.stem(w.lower()) for w in words if w not in ignore_words]
+            words = helpers.parse_request(request)
             # add to our words list
             all_words.extend(words)
-
             tokenized_requests.append((words, intent_name))
 
         counter += 1
@@ -44,9 +37,10 @@ def process_intent_data(intents_path):
 
     print('Intent data processing finished')
 
+    # remove unnecessary objects from memory
     for intent_name in intents.keys():
-        # remove unnecessary objects from memory
         del intents[intent_name][const.REQUESTS]
+
     # only slots remain in dict
     slots = intents
 
@@ -57,7 +51,6 @@ def process_intent_data(intents_path):
 
 
 def create_training_data(tokenized_requests, intent_names, all_words):
-    stemmer = LancasterStemmer()
     # create our training data
     training = []
     # create an empty array for our output
@@ -72,6 +65,7 @@ def create_training_data(tokenized_requests, intent_names, all_words):
     print('Training data processing started')
     requests_sum = float(len(tokenized_requests))
     counter = 0.0
+
     # training set, bag of words for each sentence
     for request in tokenized_requests:
         # initialize our bag of words
@@ -99,8 +93,8 @@ def create_training_data(tokenized_requests, intent_names, all_words):
     training = np.array(training)
 
     # create train lists
-    train_x = list(training[:, 0])
-    train_y = list(training[:, 1])
+    train_x = list(training[:, 0])  # for each element(tuple) take first item
+    train_y = list(training[:, 1])  # for each element(tuple) take second item
 
     return train_x, train_y
 
