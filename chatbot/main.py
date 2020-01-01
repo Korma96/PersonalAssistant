@@ -4,6 +4,7 @@ import chatbot.code.model_service as ms
 from chatbot.code.assistant import Assistant
 from os import path
 import chatbot.code.settings as s
+import sys
 
 
 def get_assistant():
@@ -31,7 +32,9 @@ def get_assistant():
     try:
         model = ms.create_model([None, len(train_x[0])], len(train_y[0]))
         model.load('data/model.tflearn')
-    except:
+    except Exception:
+        exc_info = sys.exc_info()
+        print(exc_info)
         model = ms.create_model([None, len(train_x[0])], len(train_y[0]))
         model.fit(train_x, train_y, n_epoch=50, batch_size=8)
         model.save('data/model.tflearn')

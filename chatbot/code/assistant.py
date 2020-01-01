@@ -1,17 +1,19 @@
 import chatbot.code.constants as const
 import chatbot.code.settings as s
 import chatbot.code.helpers as helpers
+from chatbot.code.request import Request
 
 
 class Assistant:
 
     def __init__(self, model, intent_config: dict, all_words: list, slots: dict):
         self._model = model
-        self._intent_config = intent_config
+        self._intent_config = intent_config  # TODO: parse intent config
         # only intents in slots are in same order as they are used for training
         self._intent_names = list(slots.keys())
         self._all_words = all_words
         self._slots = slots
+        self._reverse_slots()
         self._current_request = None
 
     def request(self, request: str):
@@ -29,8 +31,8 @@ class Assistant:
             pass
 
     def _classify(self, request: str):
-        # TODO: replace slot values with slot names in request
-        request_words = helpers.parse_request(request)
+        self._current_request = Request(request, self._slots)
+        request_words = helpers.parse_request(self._current_request.with_replaced_slots)
         bag = helpers.create_bag_of_words(request_words, self._all_words)
         # generate probabilities from the model
         results = self._model.predict([bag])[0]
@@ -43,3 +45,8 @@ class Assistant:
             return_list.append((self._intent_names[result[0]], result[1]))
         # return list of tuples (intent name, probability)
         return return_list
+
+    def _reverse_slots(self):
+        for intent_name in self._slots:
+            for slot_name in self._slots[intent_name][const.SLOTS]:
+                self._slots[intent_name][const.SLOTS][slot_name].reverse()
