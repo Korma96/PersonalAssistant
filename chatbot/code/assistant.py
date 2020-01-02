@@ -6,29 +6,42 @@ from chatbot.code.request import Request
 
 class Assistant:
 
-    def __init__(self, model, intent_config: dict, all_words: list, slots: dict):
+    def __init__(self, model, intent_config: dict, all_words: list, slots: list):
         self._model = model
         self._intent_config = intent_config  # TODO: parse intent config
-        # only intents in slots are in same order as they are used for training
-        self._intent_names = list(slots.keys())
+        # intents in intent_config are in same order as they are used for training
+        self._intent_names = list(intent_config.keys())
         self._all_words = all_words
         self._slots = slots
-        self._reverse_slots()
         self._current_request = None
 
     def request(self, request: str):
         results = self._classify(request)
+        print(self._current_request.with_replaced_slots)
+        print(results)
         # if we have a classification then find the matching intent tag
         if len(results) > 0:
+            if results[0][1] < s.RESPONSE_THRESHOLD:
+                return s.EMPTY_RESPONSE
+            if len(results) > 1:
+                if results[0][1] - results[1][1] < s.SIMILARITY_THRESHOLD:
+                    return s.NOT_SURE
+
             # take only one result with higher probability
             result = results[0]
             intent = self._intent_config[result[0]]
             # TODO: return response with the most matching slots
             return intent[const.RESPONSES][0]
         else:
-            # TODO: when this case happens ? investigate
-            # TODO: return default 'request unrecognized' message
-            pass
+            return s.EMPTY_RESPONSE
+
+    def request_test(self, request: str):
+        results = self._classify(request)
+        # if we have a classification then find the matching intent tag
+        if len(results) > 0:
+            return results[0][0]
+        else:
+            return s.EMPTY_RESPONSE
 
     def _classify(self, request: str):
         self._current_request = Request(request, self._slots)
@@ -45,8 +58,3 @@ class Assistant:
             return_list.append((self._intent_names[result[0]], result[1]))
         # return list of tuples (intent name, probability)
         return return_list
-
-    def _reverse_slots(self):
-        for intent_name in self._slots:
-            for slot_name in self._slots[intent_name][const.SLOTS]:
-                self._slots[intent_name][const.SLOTS][slot_name].reverse()

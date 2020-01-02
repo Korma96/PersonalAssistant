@@ -2,6 +2,7 @@ from nltk.stem.lancaster import LancasterStemmer
 import nltk
 import chatbot.code.settings as s
 import numpy as np
+import json
 
 
 stemmer = LancasterStemmer()
@@ -27,3 +28,15 @@ def create_bag_of_words(request_words: list, all_words: list):
                 bag[index] = 1
     # TODO: what if word is not found in all words ?
     return np.array(bag)
+
+
+def write_json_to_file(objects: any, output_path: str):
+    json_str = json.dumps(objects, indent=False)
+    with open(output_path, 'w+') as json_file:
+        json_file.write(json_str)
+
+
+def read_json_from_file(path):
+    with open(path) as json_data:
+        json_object = json.load(json_data)
+    return json_object

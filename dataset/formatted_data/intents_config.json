@@ -80,17 +80,14 @@
 	},
 	"reminder/show_reminders": {
 		"all_slots": [
-			"datetime",
-			"reminder/reference"
+			"datetime"
 		],
 		"required_slots": [
 			"datetime"
 		],
 		"responses": [
 			"Here are your reminders: ...",
-			"Showing your reminders {datetime}",
-			"Showing {reminder/reference} reminder(s)",
-			"Showing {reminder/reference} {datetime} reminder(s)"
+			"Showing your reminders {datetime}"
 		]
 	}
 }

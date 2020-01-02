@@ -1,22 +1,13 @@
 import numpy as np
 import random
 import pickle
-import json as j
 import chatbot.code.constants as const
 import chatbot.code.helpers as helpers
 import copy
 
 
-def read_intent_configuration(path):
-    with open(path) as json_data:
-        intent_config = j.load(json_data)
-    return intent_config
-
-
 def process_intent_data(intents_path):
-    with open(intents_path) as json_data:
-        intents = j.load(json_data)
-
+    intents = helpers.read_json_from_file(intents_path)
     all_words = []
     tokenized_requests = []
 
@@ -41,13 +32,10 @@ def process_intent_data(intents_path):
     for intent_name in intents.keys():
         del intents[intent_name][const.REQUESTS]
 
-    # only slots remain in dict
-    slots = intents
-
     # remove duplicates
     all_words = sorted(list(set(all_words)))
 
-    return tokenized_requests, all_words, slots
+    return tokenized_requests, all_words
 
 
 def create_training_data(tokenized_requests, intent_names, all_words):
@@ -68,17 +56,7 @@ def create_training_data(tokenized_requests, intent_names, all_words):
 
     # training set, bag of words for each sentence
     for request in tokenized_requests:
-        # initialize our bag of words
-        bag = []
-        # list of tokenized words
-        request_words = request[0]
-        # create our bag of words array
-        for word in all_words:
-            if word in request_words:
-                bag.append(1)
-            else:
-                bag.append(0)
-
+        bag = helpers.create_bag_of_words(request[0], all_words)
         output_row = output_rows[request[1]]
         training.append([bag, output_row])
 
@@ -99,8 +77,8 @@ def create_training_data(tokenized_requests, intent_names, all_words):
     return train_x, train_y
 
 
-def save_training_data(all_words, slots, train_x, train_y):
-    pickle.dump({'all_words': all_words, 'slots': slots, 'train_x': train_x, 'train_y': train_y},
+def save_training_data(all_words, train_x, train_y):
+    pickle.dump({'all_words': all_words, 'train_x': train_x, 'train_y': train_y},
                 open("data/training_data", "wb"))
 
 
@@ -108,7 +86,27 @@ def load_training_data(path):
     # restore all of our data structures
     data = pickle.load(open(path, "rb"))
     all_words = data['all_words']
-    slots = data['slots']
     train_x = data['train_x']
     train_y = data['train_y']
-    return all_words, slots, train_x, train_y
+    return all_words, train_x, train_y
+
+
+# TODO: remove invalid data(reuse functions from dataset formatter)
+def get_test_data(original_test_data_path, intent_names: list):
+    with open(original_test_data_path, 'r') as tsv_file:
+        lines = tsv_file.readlines()
+
+    result = []
+    num_of_columns = len(lines[0].split('\t'))
+    # intent \t slots \t request \t lang \t tokens
+    for line in lines:
+        parsed_line = line.split('\t')
+        if len(parsed_line) != num_of_columns:
+            raise Exception('invalid number of columns')
+
+        intent_name = parsed_line[0]
+        if intent_name in intent_names:
+            request = parsed_line[2].lower()
+            result.append((intent_name, request))
+
+    return result

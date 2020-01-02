@@ -1,5 +1,3 @@
-import chatbot.code.constants as const
-
 
 class Request:
 
@@ -9,12 +7,9 @@ class Request:
 
     @staticmethod
     def _replace_slot_values_with_slot_names(request: str, slots):
-        for intent_name in slots:
-            intent_slots = slots[intent_name][const.SLOTS]
-            for slot_name in intent_slots:
-                slot_values = intent_slots[slot_name]
-                for slot_value in slot_values:
-                    if slot_value in request:
-                        request = request.replace(slot_value, slot_name)
+        # slot = (intent_name, slot_name, slot_value)
+        for slot in slots:
+            if slot[2] in request:
+                request = request.replace(slot[2], slot[1])
 
         return request

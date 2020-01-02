@@ -5,28 +5,31 @@ from chatbot.code.assistant import Assistant
 from os import path
 import chatbot.code.settings as s
 import sys
+import chatbot.code.helpers as helpers
 
 
 def get_assistant():
     # load data
-    intent_config = ds.read_intent_configuration(s.intents_config_path)
+    intent_config = helpers.read_json_from_file(s.intents_config_path)
 
     if path.exists(s.train_data_path):
-        all_words, slots, train_x, train_y = ds.load_training_data(s.train_data_path)
+        all_words, train_x, train_y = ds.load_training_data(s.train_data_path)
     else:
         if not path.exists(s.intents_path):
             df.format(s.original_train_data_path,
                       s.intents_path,
+                      s.slots_path,
                       intent_config)
 
-        tokenized_requests, all_words, slots = ds.process_intent_data(intents_path=s.intents_path)
+        tokenized_requests, all_words = ds.process_intent_data(intents_path=s.intents_path)
         train_x, train_y = ds.create_training_data(tokenized_requests=tokenized_requests,
                                                    intent_names=list(intent_config.keys()),
                                                    all_words=all_words)
         ds.save_training_data(all_words=all_words,
-                              slots=slots,
                               train_x=train_x,
                               train_y=train_y)
+
+    slots = helpers.read_json_from_file(s.slots_path)
 
     # get model
     try:
@@ -42,7 +45,38 @@ def get_assistant():
     return Assistant(model=model, intent_config=intent_config, all_words=all_words, slots=slots)
 
 
+def test_accuracy(assistant: Assistant):
+    intent_config = helpers.read_json_from_file(s.intents_config_path)
+    test_data = ds.get_test_data(s.original_eval_data_path, list(intent_config.keys()))
+    sum = len(test_data)
+    success_counter = 0
+    failure_counter = 0
+    counter = 0.0
+    for test_tuple in test_data:
+        intent = assistant.request_test(test_tuple[1])
+        if intent == test_tuple[0]:
+            success_counter += 1
+        else:
+            failure_counter += 1
+        counter += 1
+        if counter % 100 == 0:
+            print("{0:.2f}".format(counter / sum * 100) + '%')
+
+    accuracy = round(float(success_counter)/sum, 2)
+    print('Accuracy: ' + str(accuracy))
+
+
+def manual_test(assistant: Assistant):
+    while True:
+        request = input(s.YOU)
+        if request == s.QUIT:
+            print(s.CHATBOT + s.GOOD_BYE_MESSAGE)
+            break
+
+        response = assistant.request(request)
+        print(s.CHATBOT + response)
+
+
 if __name__ == '__main__':
     assistant = get_assistant()
-    response = assistant.request('hey assistant, set new alarm for tomorrow at 6:00 am')
-    print(response)
+    test_accuracy(assistant)
