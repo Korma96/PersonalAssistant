@@ -45,7 +45,7 @@ class Assistant:
 
     def _classify(self, request: str):
         self._current_request = Request(request, self._slots)
-        request_words = helpers.parse_request(self._current_request.with_replaced_slots)
+        request_words = helpers.tokenize_request(self._current_request.with_replaced_slots)
         bag = helpers.create_bag_of_words(request_words, self._all_words)
         # generate probabilities from the model
         results = self._model.predict([bag])[0]

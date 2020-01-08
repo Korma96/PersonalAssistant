@@ -6,6 +6,7 @@ from os import path
 import chatbot.code.settings as s
 import sys
 import chatbot.code.helpers as helpers
+from chatbot.code.percent_tracker import PercentTracker
 
 
 def get_assistant():
@@ -15,17 +16,19 @@ def get_assistant():
     if path.exists(s.train_data_path):
         all_words, train_x, train_y = ds.load_training_data(s.train_data_path)
     else:
-        if not path.exists(s.intents_path):
-            df.format(s.original_train_data_path,
-                      s.intents_path,
-                      s.slots_path,
-                      intent_config)
+        if not path.exists(s.requests_path):
+            df.format(input_path=s.original_train_data_path,
+                      intents_output_path=s.intents_path,
+                      requests_output_path=s.requests_path,
+                      slots_output_path=s.slots_path,
+                      intent_config=intent_config)
 
-        tokenized_requests, all_words = ds.process_intent_data(intents_path=s.intents_path)
+        tokenized_requests, all_words = ds.process_intent_data(requests_path=s.requests_path)
         train_x, train_y = ds.create_training_data(tokenized_requests=tokenized_requests,
                                                    intent_names=list(intent_config.keys()),
                                                    all_words=all_words)
-        ds.save_training_data(all_words=all_words,
+        ds.save_training_data(path=s.train_data_path,
+                              all_words=all_words,
                               train_x=train_x,
                               train_y=train_y)
 
@@ -48,21 +51,22 @@ def get_assistant():
 def test_accuracy(assistant: Assistant):
     intent_config = helpers.read_json_from_file(s.intents_config_path)
     test_data = ds.get_test_data(s.original_eval_data_path, list(intent_config.keys()))
-    sum = len(test_data)
+    request_count = len(test_data)
     success_counter = 0
     failure_counter = 0
-    counter = 0.0
+    percent_tracker = PercentTracker(request_count)
+    print('Testing assistant started')
     for test_tuple in test_data:
         intent = assistant.request_test(test_tuple[1])
         if intent == test_tuple[0]:
             success_counter += 1
         else:
             failure_counter += 1
-        counter += 1
-        if counter % 100 == 0:
-            print("{0:.2f}".format(counter / sum * 100) + '%')
 
-    accuracy = round(float(success_counter)/sum, 2)
+        percent_tracker.do_iteration()
+    print('Testing assistant finished')
+
+    accuracy = helpers.get_percent(success_counter, request_count)
     print('Accuracy: ' + str(accuracy))
 
 
@@ -79,4 +83,4 @@ def manual_test(assistant: Assistant):
 
 if __name__ == '__main__':
     assistant = get_assistant()
-    test_accuracy(assistant)
+    manual_test(assistant)

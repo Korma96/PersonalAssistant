@@ -2,47 +2,75 @@ import chatbot.code.constants as const
 import chatbot.code.helpers as helpers
 
 
-def format(input_path, intents_output_path, slots_output_path, intent_config):
-    desired_intent_names = list(intent_config.keys())
-
+def format(input_path, intents_output_path, requests_output_path, slots_output_path, intent_config):
     with open(input_path, 'r') as tsv_file:
         lines = tsv_file.readlines()
 
-    intents = {}
-    all_slots = []
+    all_slots = []  # (intent_name, slot_name, slot_value)
+    all_requests = []  # (intent_name, request)
     num_of_columns = len(lines[0].split('\t'))
     for line in lines:
-        parse_line(line, intents, num_of_columns, desired_intent_names, intent_config, all_slots)
-
-    # sort requests
-    for intent_name in intents:
-        intent = intents[intent_name]
-        intent[const.REQUESTS].sort(key=len)
+        _parse_line(line, num_of_columns, intent_config, all_slots, all_requests)
 
     # sort slots
     all_slots.sort(key=lambda x: len(x[2]), reverse=True)
 
-    helpers.write_json_to_file(intents, intents_output_path)
+    processed_requests = []
+    for request_tuple in all_requests:
+        request = request_tuple[1]
+        request = helpers.normalize_string(request)
+        request, _ = helpers.replace_slots_in_request(request, all_slots)
+        if not helpers.already_exist(request, processed_requests, 1):
+            processed_requests.append((request_tuple[0], request))
+    processed_requests.sort(key=lambda x: len(x[1]))
+
+    helpers.write_json_to_file(processed_requests, requests_output_path)
     helpers.write_json_to_file(all_slots, slots_output_path)
 
+    # convert to user friendly view
 
-def parse_line(line: str, intents: dict, num_of_columns: int, desired_intent_names: list, intent_config, all_slots):
+    intents = {}  # { intent_name : { slots: { slot_name: [], ... }, requests[] } }
+
+    for slot in all_slots:
+        intent_name = slot[0]
+        if intent_name not in intents:
+            intents[intent_name] = {const.REQUESTS: [], const.SLOTS: {}}
+        slot_name = slot[1]
+        if slot_name not in intents[intent_name][const.SLOTS]:
+            intents[intent_name][const.SLOTS][slot_name] = []
+        intents[intent_name][const.SLOTS][slot_name].append(slot[2])
+
+    for request in processed_requests:
+        intent_name = request[0]
+        request_val = request[1]
+        intents[intent_name][const.REQUESTS].append(request_val)
+
+    # sort slots and requests
+    for intent_name in intents.keys():
+        intent = intents[intent_name]
+        intent[const.REQUESTS].sort(key=len)
+        for slot_name in intent[const.SLOTS].keys():
+            intent[const.SLOTS][slot_name].sort(key=len)
+
+    helpers.write_json_to_file(intents, intents_output_path)
+
+
+def _parse_line(line: str, num_of_columns: int, intent_config: dict, all_slots: list, all_requests: list):
     # intent \t slots \t request \t lang \t tokens
     parsed_line = line.split('\t')
     if len(parsed_line) != num_of_columns:
         raise Exception('invalid number of columns')
 
     intent_name = parsed_line[0]
-    if intent_name in desired_intent_names:
-        if intent_name not in intents:
-            intents[intent_name] = {const.REQUESTS: []}
+    if intent_name in intent_config.keys():
+        request = parsed_line[2]
+        if request:
+            if helpers.is_request_valid(request, intent_name):
+                all_requests.append((intent_name, request))
 
-        intent = intents[intent_name]
-        request = parsed_line[2].lower()
         slots_csv = parsed_line[1]
         if slots_csv:
             slots = slots_csv.split(',')
-            parsed_slots = []
             for slot in slots:
                 splitted_slot = slot.split(':')
                 start_char_index = eval(splitted_slot[0])
@@ -50,47 +78,14 @@ def parse_line(line: str, intents: dict, num_of_columns: int, desired_intent_nam
                 slot_name = splitted_slot[2]
 
                 if slot_name in intent_config[intent_name][const.ALL_SLOTS]:
-
                     slot_value = request[start_char_index:end_char_index]
+                    slot_value = helpers.normalize_string(slot_value)
 
-                    # do not add invalid data
-                    if is_invalid(slot_value, intent_config):
+                    if not helpers.is_slot_value_valid(
+                            slot_value=slot_value,
+                            intent_config=intent_config,
+                            current_intent_name=intent_name):
                         continue
 
-                    if (const.ALARM in intent_name and
-                            len(slot_value) < 10 and
-                            const.REMINDER in slot_value):
-                        continue
-                    if (const.REMINDER in intent_name and
-                            len(slot_value) < 10 and
-                            const.ALARM in slot_value):
-                        continue
-
-                    all_slots.append((intent_name, slot_name, slot_value))
-                    parsed_slots.append((slot_name, slot_value))
-            # TODO: replace slot values with slot names after sorting all slots
-            for parsed_slot in parsed_slots:
-                slot_name = parsed_slot[0]
-                slot_value = parsed_slot[1]
-                request = request.replace(slot_value, slot_name, 1)
-
-        # do not add invalid data
-        if const.ALARM in intent_name and const.REMINDER in request:
-            return
-        if const.REMINDER in intent_name and const.ALARM in request:
-            return
-
-        if request not in intent[const.REQUESTS]:
-            intent[const.REQUESTS].append(request)
-
-
-def is_invalid(slot_value: str, intent_config):
-    for intent_name in intent_config.keys():
-        if slot_value in intent_name:
-            return True
-        for slot_name in intent_config[intent_name][const.ALL_SLOTS]:
-            if slot_value in slot_name:
-                return True
-
-    return False
-
+                    if not helpers.already_exist(slot_value, all_slots, 2):
+                        all_slots.append((intent_name, slot_name, slot_value))
