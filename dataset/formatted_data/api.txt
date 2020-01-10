@@ -1,0 +1,26 @@
+
+-------------------------------------------
+{
+ "original": "I want to see my alarms",
+ "normalized": "i want to see my alarms",
+ "with_replaced_slots": "i want to see my alarms",
+ "replaced_slots": {}
+}
+-------------------------------------------
+{
+ "original": "show me my alarms",
+ "normalized": "show me my alarms",
+ "with_replaced_slots": "show me my alarms",
+ "replaced_slots": {}
+}
+-------------------------------------------
+{
+ "original": "i want to set reminder for tomorrow at 7 am",
+ "normalized": "i want to set reminder for tomorrow at num am",
+ "with_replaced_slots": "i want to set reminder datetime",
+ "replaced_slots": {
+  "datetime": [
+   "for tomorrow at 7 am"
+  ]
+ }
+}

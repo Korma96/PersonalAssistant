@@ -4,6 +4,7 @@ import chatbot.code.settings as s
 import numpy as np
 import json
 import chatbot.code.constants as const
+import re
 
 
 stemmer = LancasterStemmer()
@@ -33,6 +34,10 @@ def write_json_to_file(objects: any, output_path: str):
     json_str = json.dumps(objects, indent=False)
     with open(output_path, 'w+') as json_file:
         json_file.write(json_str)
+
+
+def get_json_string(objects: any):
+    return json.dumps(objects, indent=True)
 
 
 def read_json_from_file(path):
@@ -71,7 +76,7 @@ def is_request_valid(request: str, intent_name: str):
     return True
 
 
-def already_exist(value: str, all_values: list, index: int):
+def already_exists_in_list(value: str, all_values: list, index: int):
     for val in all_values:
         if val[index] == value:
             return True
@@ -82,21 +87,48 @@ def normalize_string(string: str):
     # 1) lowercase
     string = string.lower()
     # 2) replace numbers
-    for num in const.NUMBERS:
-        if num in string:
-            string = string.replace(num, const.NUMERIC)
+    string = re.sub('[0-9]', const.NUMERIC, string)
     # 3) remove unnecessary whitespaces
     return ' '.join(string.split())
 
 
-def replace_slots_in_request(request: str, all_slots):
+def contains_letters(string: str):
+    return any(char.isalpha() for char in string)
+
+
+def replace_slots_in_request(request: str, all_slots) -> str:
+    # slot = (intent_name, slot_name, slot_value)
+    for slot in all_slots:
+        if request_contains_slot(request, slot[2]):
+            request = request.replace(slot[2], slot[1])
+
+    return request
+
+
+def request_contains_slot(request, slot):
+    if 'tomorrow' in request and 'tomorrow' == slot:
+        print('')
+    if slot not in request:
+        return False
+    before, value, after = request.partition(slot)
+    if value == '' or last_char_or_empty(before).isalpha() or last_char_or_empty(after).isalpha():
+        return False
+    return True
+
+
+def last_char_or_empty(string: str):
+    if string:
+        return string[-1]
+    return ''
+
+
+def replace_slots_in_request_and_get_slots(request: str, all_slots):
     replaced_slots = {}
     # slot = (intent_name, slot_name, slot_value)
     for slot in all_slots:
         slot_name = slot[1]
         slot_value = slot[2]
-        splitted_request = request.split()
-        if slot_value in splitted_request:
+        if request_contains_slot(request, slot_value):
             if slot_name not in replaced_slots:
                 replaced_slots[slot_name] = []
             replaced_slots[slot_name].append(slot_value)

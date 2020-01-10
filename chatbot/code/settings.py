@@ -13,6 +13,7 @@ original_eval_data_path = '../dataset/original_data/eval-en.tsv'
 test_requests_path = '../dataset/formatted_data/test/requests.json'
 test_slots_path = '../dataset/formatted_data/test/slots.json'
 test_intents_path = '../dataset/formatted_data/test/intents.json'
+recognized_slots_output_path = '../dataset/formatted_data/api.txt'
 
 # thresholds
 ERROR_THRESHOLD = 0.25
@@ -22,12 +23,13 @@ SIMILARITY_THRESHOLD = 0.1
 # assistant config
 EMPTY_RESPONSE = ''
 NOT_SURE = 'Can you please rephrase the request?'
+MISSING_REQUIRED_SLOT = 'Your request is incomplete, please provide more information.'
 
 # general
-default_show_period = 100
+default_show_period = 200
 ignore_words = ['?', '!']
 QUIT = 'q'
 YOU = 'You: '
 CHATBOT = 'Chatbot: '
 GOOD_BYE_MESSAGE = 'Good bye'
-
+DEBUG = False

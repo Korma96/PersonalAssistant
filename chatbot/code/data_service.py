@@ -74,7 +74,7 @@ def _get_output_rows(intent_names):
 
 
 def save_training_data(path, all_words: list, train_x, train_y):
-    helpers.write_json_to_file(all_words, settings.all_words_path)
+    helpers.write_json_to_file(all_words.sort(key=len), settings.all_words_path)
     pickle.dump({'all_words': all_words, 'train_x': train_x, 'train_y': train_y},
                 open(path, 'wb'))
 
