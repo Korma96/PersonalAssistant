@@ -48,9 +48,9 @@ def get_assistant():
     return Assistant(model=model, intent_config=intent_config, all_words=all_words, slots=slots)
 
 
-def test_accuracy(assistant: Assistant):
+def get_accuracy(assistant: Assistant, original_path):
     intent_config = helpers.read_json_from_file(s.intents_config_path)
-    test_data = ds.get_test_data(s.original_eval_data_path, list(intent_config.keys()))
+    test_data = ds.get_test_data(original_path, list(intent_config.keys()))
     request_count = len(test_data)
     success_counter = 0
     failure_counter = 0
@@ -66,8 +66,15 @@ def test_accuracy(assistant: Assistant):
         percent_tracker.do_iteration()
     print('Testing assistant finished')
 
-    accuracy = helpers.get_percent(success_counter, request_count)
-    print('Accuracy: ' + str(accuracy))
+    return helpers.get_percent(success_counter, request_count)
+
+
+def test_accuracy(assistant: Assistant):
+    train_acc = get_accuracy(assistant, s.original_train_data_path)
+    test_acc = get_accuracy(assistant, s.original_test_data_path)
+    eval_acc = get_accuracy(assistant, s.original_eval_data_path)
+    print('Train acc: ' + str(train_acc) + '\nTest acc: ' + str(test_acc) + '\nEval acc: ' + str(eval_acc))
+    print('')
 
 
 def manual_test(assistant: Assistant):
@@ -83,4 +90,4 @@ def manual_test(assistant: Assistant):
 
 if __name__ == '__main__':
     assistant = get_assistant()
-    manual_test(assistant)
+    test_accuracy(assistant)

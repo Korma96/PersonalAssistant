@@ -91,12 +91,12 @@ def normalize_string(string: str):
 
 def replace_slots_in_request(request: str, all_slots):
     replaced_slots = {}
+    request_split = request.split()
     # slot = (intent_name, slot_name, slot_value)
     for slot in all_slots:
         slot_name = slot[1]
         slot_value = slot[2]
-        splitted_request = request.split()
-        if slot_value in splitted_request:
+        if slot_value in request_split:
             if slot_name not in replaced_slots:
                 replaced_slots[slot_name] = []
             replaced_slots[slot_name].append(slot_value)
@@ -106,4 +106,4 @@ def replace_slots_in_request(request: str, all_slots):
 
 
 def get_percent(part, whole) -> float:
-    return round(float(part) / whole, 4)
+    return float(part) / whole

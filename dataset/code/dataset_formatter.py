@@ -1,5 +1,6 @@
 import chatbot.code.constants as const
 import chatbot.code.helpers as helpers
+from chatbot.code.percent_tracker import PercentTracker
 
 
 def format(input_path, intents_output_path, requests_output_path, slots_output_path, intent_config):
@@ -15,6 +16,8 @@ def format(input_path, intents_output_path, requests_output_path, slots_output_p
     # sort slots
     all_slots.sort(key=lambda x: len(x[2]), reverse=True)
 
+    print('Request & slot data processing started')
+    percent_tracker = PercentTracker(len(all_requests))
     processed_requests = []
     for request_tuple in all_requests:
         request = request_tuple[1]
@@ -22,6 +25,8 @@ def format(input_path, intents_output_path, requests_output_path, slots_output_p
         request, _ = helpers.replace_slots_in_request(request, all_slots)
         if not helpers.already_exist(request, processed_requests, 1):
             processed_requests.append((request_tuple[0], request))
+        percent_tracker.do_iteration()
+    print('Request & slot data processing finished')
     processed_requests.sort(key=lambda x: len(x[1]))
 
     helpers.write_json_to_file(processed_requests, requests_output_path)
@@ -29,28 +34,27 @@ def format(input_path, intents_output_path, requests_output_path, slots_output_p
 
     # convert to user friendly view
 
-    intents = {}  # { intent_name : { slots: { slot_name: [], ... }, requests[] } }
+    intents = {const.SLOTS: {}, const.REQUESTS: {}}
 
     for slot in all_slots:
-        intent_name = slot[0]
-        if intent_name not in intents:
-            intents[intent_name] = {const.REQUESTS: [], const.SLOTS: {}}
         slot_name = slot[1]
-        if slot_name not in intents[intent_name][const.SLOTS]:
-            intents[intent_name][const.SLOTS][slot_name] = []
-        intents[intent_name][const.SLOTS][slot_name].append(slot[2])
+        if slot_name not in intents[const.SLOTS]:
+            intents[const.SLOTS][slot_name] = []
+        intents[const.SLOTS][slot_name].append(slot[2])
 
-    for request in processed_requests:
+    for request in all_requests:
         intent_name = request[0]
-        request_val = request[1]
-        intents[intent_name][const.REQUESTS].append(request_val)
+        if intent_name not in intents[const.REQUESTS]:
+            intents[const.REQUESTS][intent_name] = []
+        intents[const.REQUESTS][intent_name].append(request[1])
 
-    # sort slots and requests
-    for intent_name in intents.keys():
-        intent = intents[intent_name]
-        intent[const.REQUESTS].sort(key=len)
-        for slot_name in intent[const.SLOTS].keys():
-            intent[const.SLOTS][slot_name].sort(key=len)
+    # sort slots
+    for slot_name in intents[const.SLOTS]:
+        intents[const.SLOTS][slot_name].sort(key=len)
+
+    # sort requests
+    for intent_name in intents[const.REQUESTS]:
+        intents[const.REQUESTS][intent_name].sort(key=len)
 
     helpers.write_json_to_file(intents, intents_output_path)
 
