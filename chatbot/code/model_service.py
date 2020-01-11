@@ -12,5 +12,5 @@ def create_model(train_x_data_shape, train_y_data_shape):
     net = tflearn.fully_connected(net, train_y_data_shape, activation='softmax')
     net = tflearn.regression(net)
 
-    # Define model and setup tensorboard
-    return tflearn.DNN(net, tensorboard_dir='tflearn_logs')
+    # Define model
+    return tflearn.DNN(net)
