@@ -17195,11 +17195,6 @@
 "charge my phone"
 ],
 [
-"alarm/set_alarm",
-"datetime",
-"num num num num"
-],
-[
 "reminder/set_reminder",
 "datetime",
 "on his birthday"
@@ -24395,11 +24390,6 @@
 "mon-fri"
 ],
 [
-"alarm/set_alarm",
-"datetime",
-"num num"
-],
-[
 "reminder/set_reminder",
 "reminder/todo",
 "webinar"
@@ -24793,11 +24783,6 @@
 "alarm/set_alarm",
 "datetime",
 "now"
-],
-[
-"alarm/modify_alarm",
-"datetime",
-"num"
 ],
 [
 "alarm/cancel_alarm",

@@ -1,0 +1,13 @@
+
+-------------------------------------------
+{
+ "original": "set reminder on friday morning at 15:00 pm",
+ "normalized": "set reminder on friday morning at num num : num num pm",
+ "with_replaced_slots": "set reminder datetime datetime",
+ "replaced_slots": {
+  "datetime": [
+   "at 15:00 pm",
+   "on friday morning"
+  ]
+ }
+}
