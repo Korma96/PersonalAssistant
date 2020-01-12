@@ -1,0 +1,206 @@
+alarm/modify_alarm	Please change my Sunday 3:45am alarm to the next day at 5am	datetime	to	Invalid slot value
+alarm/modify_alarm	Please change my Sunday 3:45am alarm to the next day at 5am	datetime	to	Invalid slot value
+alarm/modify_alarm	Please change my Sunday 3:45am alarm to the next day at 5am	datetime	to	Invalid slot value
+reminder/set_reminder	remind me about my date tomorrow at 3pm	reminder/todo	date	Invalid slot value
+reminder/set_reminder	remind me of my alarm in 2 hours	reminder/todo	alarm	Invalid slot value
+reminder/set_reminder	remind me to set alarm	reminder/todo	set alarm	Invalid slot value
+reminder/set_reminder	Remind me to set alarm tonight	reminder/todo	set alarm	Invalid slot value
+reminder/set_reminder	Reminder set alarm for 500 am tomorrow	reminder/todo	set alarm	Invalid slot value
+reminder/set_reminder	Reminder set alarm for 500 am tomorrow	reminder/todo	set alarm	Invalid slot value
+reminder/set_reminder	Remind me about the show that's on at 7 pm	reminder/todo	show	Invalid slot value
+reminder/set_reminder	place reminder on Saturday, date	reminder/todo	reminder	Invalid slot value
+alarm/modify_alarm	set alarm to go off 10 minutes early	datetime	alarm	Invalid slot value
+reminder/set_reminder	remind me of my date at 6 pm tomorrow	reminder/todo	date	Invalid slot value
+reminder/set_reminder	Remind me to set alarm for 8 am tomorrow	reminder/todo	set alarm	Invalid slot value
+reminder/set_reminder	remind me to set alarm for 6 am	reminder/todo	set alarm	Invalid slot value
+reminder/set_reminder	Remind me to set alarm for Friday morning	reminder/todo	set alarm	Invalid slot value
+reminder/set_reminder	remind me to set alarm for 2pm on Sunday	reminder/todo	set alarm	Invalid slot value
+reminder/show_reminders	how much time until my next reminder	datetime	time	Invalid slot value
+reminder/set_reminder	Remind me to set alarm at 9pm	reminder/todo	set alarm	Invalid slot value
+reminder/set_reminder	Set a reminder to pick up the dry cleaning on Friday	reminder/recurring_period	reminder	Invalid slot value
+reminder/set_reminder	Remind me to set alarm.	reminder/todo	set alarm	Invalid slot value
+reminder/set_reminder	remind me to set alarm for 6 am	reminder/todo	set alarm	Invalid slot value
+reminder/set_reminder	Remind me to set alarm tomorrow.	reminder/todo	set alarm	Invalid slot value
+reminder/set_reminder	Remind me to make a doctor's appointment	reminder/todo	remind	Invalid slot value
+reminder/set_reminder	reminder alarm for 10am tuesday august 15	reminder/todo	alarm	Invalid slot value
+reminder/set_reminder	Set a reminder with my 5:00 alarm.	reminder/todo	alarm	Invalid slot value
+reminder/set_reminder	Create reminder to set alarm at 7:30pm	reminder/todo	set alarm	Invalid slot value
+reminder/set_reminder	Remind me to call the veterinarian to make an appointment tonight.	reminder/todo	remind	Invalid slot value
+reminder/set_reminder	reminder alarm for 10am tuesday august 15	reminder/todo	alarm	Invalid slot value
+reminder/set_reminder	Remind me to set alarm.	reminder/todo	set alarm	Invalid slot value
+alarm/show_alarms	What alarm to I have set for tomorrow?	datetime	alarm	Invalid slot value
+reminder/set_reminder	Remind me to set alarm for Friday morning	reminder/todo	set alarm	Invalid slot value
+reminder/set_reminder	remind me to set alarm at 8	reminder/todo	set alarm	Invalid slot value
+reminder/set_reminder	Set an alarm to remind me to drink water every 2 hours			Invalid request
+alarm/cancel_alarm	cancel all alarms and reminders please			Invalid request
+reminder/cancel_reminder	cancel all alarms and reminders			Invalid request
+reminder/set_reminder	Set a reminder alarm for 2pm			Invalid request
+reminder/show_reminders	show alarm reminder			Invalid request
+reminder/set_reminder	set a reminder called golf for this sunday at seven am, set an alarm for this reminder to go off 30 minutes beforehand			Invalid request
+reminder/set_reminder	Please remind me to set an alarm			Invalid request
+reminder/set_reminder	remind me to set my alarm for 8 am on sunday			Invalid request
+reminder/show_reminders	show alarm reminder			Invalid request
+reminder/set_reminder	create new alarm reminder groceries			Invalid request
+reminder/set_reminder	Remind me to set an alarm for tomorrow morning			Invalid request
+reminder/set_reminder	set my alarm for tonights Empire show as a reminder			Invalid request
+reminder/set_reminder	remind me to set my alarm tonight			Invalid request
+reminder/set_reminder	remind me of my alarm in 2 hours			Invalid request
+alarm/set_alarm	Set an alarm and a reminder to pick up George at 9am			Invalid request
+reminder/set_reminder	Set alarm to remind me to place amazon order			Invalid request
+reminder/set_reminder	Remind me with an alarm in 10 minutes			Invalid request
+reminder/set_reminder	set a reminder called golf for this sunday at seven am, set an alarm for this reminder to go off 30 minutes beforehand			Invalid request
+reminder/set_reminder	Remind me to set an alarm in 30 minutes			Invalid request
+reminder/set_reminder	Remind me to set the house alarm each night			Invalid request
+reminder/set_reminder	remind me to sell my home tomorrow at 8pm with alarm			Invalid request
+reminder/set_reminder	reminder alarm for 3pm meeting			Invalid request
+reminder/set_reminder	remind me to set the alarm tonight			Invalid request
+reminder/set_reminder	remind me to set an alarm for the gym			Invalid request
+reminder/set_reminder	Add reminder to review alarm settings			Invalid request
+reminder/set_reminder	Remind me to set an alarm in 30 minutes			Invalid request
+alarm/set_alarm	Create an alarm for 7:00 am tomorrow and a reminder for the same time to take an umbrella			Invalid request
+reminder/set_reminder	Remind me to set an alarm at 4 pm before I take a nap			Invalid request
+alarm/show_alarms	Show me the list of alarms and reminders			Invalid request
+reminder/set_reminder	remind me to shut off my alarm			Invalid request
+alarm/set_alarm	add alarm to tomorrows reminder			Invalid request
+reminder/set_reminder	Remind me to turn off my alarm tomorrow			Invalid request
+reminder/set_reminder	remind me to set my alarm for 8am tomorrow morning at 10pm			Invalid request
+reminder/set_reminder	remind me to set alarm			Invalid request
+reminder/cancel_reminder	cancel all reminders and alarms for today			Invalid request
+reminder/set_reminder	Remind me to set alarm tonight			Invalid request
+reminder/set_reminder	Remind me to set an alarm tomorrow			Invalid request
+reminder/set_reminder	add reminder tonight alarm at 6, call Shebee			Invalid request
+alarm/set_alarm	Set a reminder alarm for Thursday at 8am			Invalid request
+reminder/set_reminder	Reminder set alarm for 500 am tomorrow			Invalid request
+reminder/set_reminder	Remind me to set an alarm at 4 pm before I take a nap			Invalid request
+reminder/set_reminder	Set a reminder at noon everyday two check alarm system			Invalid request
+reminder/set_reminder	remind me to sell my home tomorrow at 8pm with alarm			Invalid request
+alarm/set_alarm	set my alarm for 10 tonight as a reminder			Invalid request
+reminder/set_reminder	Remind me to turn off my alarm tomorrow			Invalid request
+alarm/set_alarm	Set an alarm and a reminder to pick up George at 9am			Invalid request
+alarm/cancel_alarm	cancel all alarms and reminders please			Invalid request
+reminder/show_reminders	remind me when my alarm is set			Invalid request
+reminder/set_reminder	Reminder set alarm for 500 am tomorrow			Invalid request
+reminder/set_reminder	Remind me to set alarm for six am tonight			Invalid request
+reminder/show_reminders	List all my reminders and alarms			Invalid request
+alarm/cancel_alarm	Cancel all alarms and reminders for June			Invalid request
+alarm/set_alarm	Set an alarm and reminder for next Tuesday at 9:00 am for a conference call			Invalid request
+reminder/cancel_reminder	cancel all alarms and reminders			Invalid request
+reminder/set_reminder	set a reminder for my meeting tonight at five, give me an alarm an hour before			Invalid request
+reminder/set_reminder	Remind me to set an alarm for tomorrow morning before 10 pm			Invalid request
+reminder/set_reminder	Remind me to set the alarm for the house tonight			Invalid request
+reminder/set_reminder	Remind me to change my alarm from 7 am to 6 am for next Monday			Invalid request
+reminder/set_reminder	reminder alarm for 3pm meeting			Invalid request
+reminder/set_reminder	Remind me to set an alarm for 2pm tomorrow			Invalid request
+reminder/set_reminder	remind me to set alarms for morning			Invalid request
+reminder/set_reminder	Set a reminder alarm for work ending			Invalid request
+reminder/set_reminder	Remind me to set an alarm for tomorrow morning before 10 pm			Invalid request
+reminder/set_reminder	remind me to set alarms for morning			Invalid request
+reminder/set_reminder	make a reminder alarm for next week on the 8th at 9pm for movie night			Invalid request
+reminder/set_reminder	remind me to set the alarm before I leave work			Invalid request
+reminder/set_reminder	remind me to set my alarm tonight			Invalid request
+alarm/set_alarm	Create an alarm for 7:00 am tomorrow and a reminder for the same time to take an umbrella			Invalid request
+reminder/set_reminder	Remind me to set an alarm tomorrow			Invalid request
+alarm/show_alarms	Show current alarm reminder			Invalid request
+reminder/set_reminder	remind me at 8:00 to reset my alarm for tomorrow morning			Invalid request
+reminder/set_reminder	remind to set an alarm for 5am			Invalid request
+alarm/set_alarm	Set an alarm and reminder for my brother's birthday on October 25th			Invalid request
+reminder/set_reminder	Add reminder to review alarm settings			Invalid request
+reminder/set_reminder	remind me to set my alarm sunday night			Invalid request
+alarm/cancel_alarm	Cancel my alarm for gas reminder today.			Invalid request
+reminder/set_reminder	make a reminder alarm for an appointment on 3pm this tuesday please			Invalid request
+reminder/set_reminder	Remind me to set the alarm for the house tonight			Invalid request
+reminder/set_reminder	remind me to turn off my alarm			Invalid request
+reminder/set_reminder	Remind me to set my alarm at 10pm			Invalid request
+reminder/set_reminder	Remind me to set alarm for 8 am tomorrow			Invalid request
+reminder/set_reminder	set reminder for setting morning alarm			Invalid request
+reminder/set_reminder	remind me to cancel my alarm.			Invalid request
+reminder/set_reminder	remind me to buy a new alarm clock			Invalid request
+reminder/set_reminder	Reminder to set new alarms on September 1st			Invalid request
+reminder/set_reminder	Remind me to set alarm for work			Invalid request
+reminder/set_reminder	Remind me to set my alarm.			Invalid request
+reminder/set_reminder	remind me to set alarm for 6 am			Invalid request
+reminder/set_reminder	remind me to cancel alarm			Invalid request
+reminder/set_reminder	Remind me to set alarm for Friday morning			Invalid request
+reminder/set_reminder	remind me to set my alarm before bed			Invalid request
+reminder/cancel_reminder	please cancel my reminder alarm this afternoon			Invalid request
+reminder/set_reminder	remind me to set alarm for 2pm on Sunday			Invalid request
+reminder/show_reminders	Show me a reminder for my next alarm.			Invalid request
+reminder/set_reminder	Remind me to set the alarm for the house tonight			Invalid request
+reminder/set_reminder	remind me to leave 10 minutes before my alarm			Invalid request
+alarm/set_alarm	Set alarm for Wednesday night at 9:00 pm as reminder.			Invalid request
+reminder/set_reminder	remind me to set my alarm for 8 am on sunday			Invalid request
+reminder/set_reminder	remind me at 8:00 to reset my alarm for tomorrow morning			Invalid request
+reminder/cancel_reminder	please cancel my reminder alarm this afternoon			Invalid request
+reminder/set_reminder	Remind me to set home alarm at 8pm			Invalid request
+reminder/set_reminder	Remind me to set my alarm for 5am tomorrow.			Invalid request
+reminder/set_reminder	remind me to turn off my alarm			Invalid request
+reminder/set_reminder	remind me to cancel my alarm.			Invalid request
+reminder/set_reminder	Remind me to set my 7am alarm.			Invalid request
+reminder/set_reminder	Remind me to fix the fire alarm.			Invalid request
+reminder/set_reminder	remind me to set alarms			Invalid request
+alarm/set_alarm	Set an alarm and reminder for next Tuesday at 9:00 am for a conference call			Invalid request
+reminder/set_reminder	remind me to sell my home tomorrow at 8pm with alarm.			Invalid request
+alarm/cancel_alarm	Cancel alarm connected to medication reminders.			Invalid request
+reminder/set_reminder	remind me to leave 10 minutes before my alarm			Invalid request
+reminder/set_reminder	Remind me to set alarm at 9pm			Invalid request
+reminder/set_reminder	set reminder to set house alarm whenever I leave my home			Invalid request
+reminder/set_reminder	Remind me to fix the fire alarm.			Invalid request
+reminder/set_reminder	set reminder for setting morning alarm			Invalid request
+reminder/set_reminder	Remind me to set the snooze alarm.			Invalid request
+reminder/set_reminder	remind me to set an alarm for the gym			Invalid request
+reminder/show_reminders	Show me a reminder for my next alarm.			Invalid request
+reminder/set_reminder	Remind me to set my alarm at 10pm			Invalid request
+reminder/set_reminder	set a reminder called golf for this sunday at seven am, set an alarm for this reminder to go off 30 minutes beforehand			Invalid request
+reminder/set_reminder	Remind me to set the snooze alarm.			Invalid request
+reminder/cancel_reminder	Mute the current reminder and alarm			Invalid request
+reminder/set_reminder	Remind me to set alarm.			Invalid request
+alarm/cancel_alarm	Cancel my alarm for gas reminder today.			Invalid request
+reminder/set_reminder	Set alarm to remind me to place amazon order			Invalid request
+reminder/set_reminder	remind me to set alarm for 6 am			Invalid request
+reminder/set_reminder	Remind me to set alarm tomorrow.			Invalid request
+reminder/show_reminders	List all my reminders and alarms			Invalid request
+reminder/set_reminder	Remind me to set home alarm at 8pm			Invalid request
+reminder/set_reminder	reminder alarm for 10am tuesday august 15			Invalid request
+reminder/set_reminder	Set a reminder alarm for 2pm			Invalid request
+reminder/set_reminder	Remind me on Saturday to start my two day fast when the alarm goes off at 4			Invalid request
+reminder/set_reminder	Remind me to set the house alarm each night.			Invalid request
+reminder/set_reminder	remind me to set the alarm			Invalid request
+reminder/set_reminder	Set a reminder with my 5:00 alarm.			Invalid request
+reminder/cancel_reminder	remove all reminders and alarms			Invalid request
+reminder/set_reminder	Remind me to set an alarm for Monday this Sunday.			Invalid request
+reminder/set_reminder	add reminder tonight alarm at 6, call Shebee			Invalid request
+reminder/cancel_reminder	remove all reminders and alarms			Invalid request
+alarm/cancel_alarm	Cancel alarm connected to medication reminders.			Invalid request
+alarm/cancel_alarm	remove all alarms and reminders			Invalid request
+reminder/set_reminder	remind me to set alarms			Invalid request
+reminder/show_reminders	Read me all my reminders and alarms for Tuesday.			Invalid request
+reminder/set_reminder	Remind me to set my alarm.			Invalid request
+reminder/set_reminder	Create reminder to set alarm at 7:30pm			Invalid request
+alarm/set_alarm	Set an alarm and a reminder at 8 AM to leave for school			Invalid request
+alarm/show_alarms	Show me the list of alarms and reminders			Invalid request
+alarm/set_alarm	Set an alarm reminder at 4:00 pm 			Invalid request
+reminder/set_reminder	reminder alarm for 10am tuesday august 15			Invalid request
+alarm/set_alarm	Set alarm for Wednesday night at 9:00 pm as reminder.			Invalid request
+reminder/set_reminder	Remind me to set alarm.			Invalid request
+alarm/set_alarm	Set an alarm reminder for Feb.14			Invalid request
+reminder/show_reminders	What alarms and reminders did I set for next Saturday			Invalid request
+alarm/set_alarm	add alarm to tomorrows reminder			Invalid request
+reminder/set_reminder	Remind me to cancel my alarm afterwards.			Invalid request
+alarm/set_alarm	set an alarm reminder in two hours			Invalid request
+reminder/set_reminder	remind me to set an alarm for ups			Invalid request
+reminder/set_reminder	remind me to set the alarm before I leave work			Invalid request
+reminder/set_reminder	remind me to set the alarm tonight			Invalid request
+reminder/set_reminder	remind me to set my alarm tonight			Invalid request
+reminder/set_reminder	Please remind me to set an alarm.			Invalid request
+alarm/set_alarm	set my alarm for 10 tonight as a reminder			Invalid request
+alarm/show_alarms	Show current alarm reminder			Invalid request
+reminder/set_reminder	Remind me to set alarm for Friday morning			Invalid request
+alarm/cancel_alarm	Delete alarm reminder.			Invalid request
+reminder/set_reminder	remind me to set alarm at 8			Invalid request
+reminder/set_reminder	set reminder to lock door and set alarm			Invalid request
+reminder/cancel_reminder	Mute the current reminder and alarm			Invalid request
+reminder/cancel_reminder	stop all reminders and alarms			Invalid request
+alarm/set_alarm	Set an alarm reminder for Feb.14			Invalid request
+reminder/set_reminder	Remind me to set alarm for work			Invalid request
+reminder/cancel_reminder	Cancel all reminders and alarms for Friday.			Invalid request
+reminder/set_reminder	remind me 5 minutes before my alarm			Invalid request

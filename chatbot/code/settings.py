@@ -7,6 +7,8 @@ slots_path = '../dataset/formatted_data/train/slots.json'
 intents_path = '../dataset/formatted_data/train/intents.json'
 train_data_path = 'data/training_data'
 all_words_path = 'data/all_words.json'
+recognized_slots_output_path = '../dataset/formatted_data/train/api.txt'
+invalid_data_path = '../dataset/formatted_data/train/invalid_data.tsv'
 # test
 original_test_data_path = '../dataset/original_data/test-en.tsv'
 original_eval_data_path = '../dataset/original_data/eval-en.tsv'
@@ -22,12 +24,12 @@ SIMILARITY_THRESHOLD = 0.1
 # assistant config
 EMPTY_RESPONSE = ''
 NOT_SURE = 'Can you please rephrase the request?'
+MISSING_REQUIRED_SLOT = 'Your request is incomplete, please provide more information.'
 
 # general
-default_show_period = 100
 ignore_words = ['?', '!']
 QUIT = 'q'
 YOU = 'You: '
 CHATBOT = 'Chatbot: '
 GOOD_BYE_MESSAGE = 'Good bye'
-
+DEBUG = True

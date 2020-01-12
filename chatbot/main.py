@@ -17,13 +17,13 @@ def get_assistant():
         all_words, train_x, train_y = ds.load_training_data(s.train_data_path)
     else:
         if not path.exists(s.requests_path):
-            df.format(input_path=s.original_train_data_path,
-                      intents_output_path=s.intents_path,
-                      requests_output_path=s.requests_path,
-                      slots_output_path=s.slots_path,
-                      intent_config=intent_config)
+            df.format_dataset(input_path=s.original_train_data_path,
+                              intents_output_path=s.intents_path,
+                              requests_output_path=s.requests_path,
+                              slots_output_path=s.slots_path,
+                              intent_config=intent_config)
 
-        tokenized_requests, all_words = ds.process_intent_data(requests_path=s.requests_path)
+        tokenized_requests, all_words = ds.process_requests(requests_path=s.requests_path)
         train_x, train_y = ds.create_training_data(tokenized_requests=tokenized_requests,
                                                    intent_names=list(intent_config.keys()),
                                                    all_words=all_words)

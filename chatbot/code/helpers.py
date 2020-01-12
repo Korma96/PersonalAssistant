@@ -78,6 +78,17 @@ def already_exist(value: str, all_values: list, index: int):
     return False
 
 
+def get_json_string(objects: any):
+    return json.dumps(objects, indent=True)
+
+
+def contains_only_numbers(string: str):
+    for char in string:
+        if char not in const.NUMBERS:
+            return False
+    return True
+
+
 def normalize_string(string: str):
     # 1) lowercase
     string = string.lower()
