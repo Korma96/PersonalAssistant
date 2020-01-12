@@ -1,23 +1,15 @@
 {
 	"alarm/cancel_alarm": {
-		"all_slots": [
-			"datetime"
-		],
-		"required_slots": [
-			"datetime"
-		],
+		"all_slots": ["datetime"],
+		"required_slots": [],
 		"responses": [
 			"Your alarm is canceled",
 			"Alarm {datetime} canceled"
 		]
 	},
 	"alarm/modify_alarm": {
-		"all_slots": [
-			"datetime"
-		],
-		"required_slots": [
-			"datetime"
-		],
+		"all_slots": ["datetime"],
+		"required_slots": [],
 		"responses": [
 			"Your alarm is modified",
 			"Modifying your alarm {datetime}"
@@ -29,9 +21,7 @@
 			"timer/attributes",
 			"alarm/alarm_modifier"
 		],
-		"required_slots": [
-			"datetime"
-		],
+		"required_slots": ["datetime"],
 		"responses": [
 			"Your alarm is set",
 			"Alarm set {datetime}",
@@ -40,24 +30,16 @@
 		]
 	},
 	"alarm/show_alarms": {
-		"all_slots": [
-			"datetime"
-		],
-		"required_slots": [
-			"datetime"
-		],
+		"all_slots": ["datetime"],
+		"required_slots": [],
 		"responses": [
 			"Your alarms: ...",
 			"Showing your alarms {datetime}"
 		]
 	},
 	"reminder/cancel_reminder": {
-		"all_slots": [
-			"datetime"
-		],
-		"required_slots": [
-			"datetime"
-		],
+		"all_slots": ["datetime"],
+		"required_slots": [],
 		"responses": [
 			"Your reminder is canceled",
 			"Reminder {datetime} canceled"
@@ -69,9 +51,7 @@
 			"reminder/todo",
 			"reminder/recurring_period"
 		],
-		"required_slots": [
-			"datetime"
-		],
+		"required_slots": ["datetime"],
 		"responses": [
 			"Reminder set {datetime}",
 			"Reminder {reminder/todo} set {datetime}",
@@ -79,12 +59,8 @@
 		]
 	},
 	"reminder/show_reminders": {
-		"all_slots": [
-			"datetime"
-		],
-		"required_slots": [
-			"datetime"
-		],
+		"all_slots": ["datetime"],
+		"required_slots": [],
 		"responses": [
 			"Here are your reminders: ...",
 			"Showing your reminders {datetime}"

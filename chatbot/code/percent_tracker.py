@@ -1,12 +1,11 @@
-import chatbot.code.settings as s
 import chatbot.code.helpers as helpers
 
 
 class PercentTracker:
 
-    def __init__(self, whole_count, show_period=s.default_show_period):
+    def __init__(self, whole_count):
         self._whole_count = whole_count
-        self._show_period = show_period
+        self._show_period = int(whole_count / 100)
         self._counter = 0
 
     def do_iteration(self):

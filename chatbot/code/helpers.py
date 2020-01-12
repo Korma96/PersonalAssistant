@@ -41,7 +41,10 @@ def read_json_from_file(path):
     return json_object
 
 
-# TODO: log invalid slots
+def get_json_string(objects: any):
+    return json.dumps(objects, indent=True)
+
+
 def is_slot_value_valid(slot_value: str, intent_config: dict, current_intent_name: str = ''):
     if (const.ALARM in current_intent_name and
             len(slot_value) < 10 and
@@ -62,7 +65,6 @@ def is_slot_value_valid(slot_value: str, intent_config: dict, current_intent_nam
     return True
 
 
-# TODO: log invalid requests
 def is_request_valid(request: str, intent_name: str):
     if const.ALARM in intent_name and const.REMINDER in request:
         return False
@@ -88,7 +90,7 @@ def normalize_string(string: str):
     # 3) remove unnecessary whitespaces
     return ' '.join(string.split())
 
-
+'''
 def replace_slots_in_request(request: str, all_slots):
     replaced_slots = {}
     request_split = request.split()
@@ -103,7 +105,60 @@ def replace_slots_in_request(request: str, all_slots):
             request = request.replace(slot_value, slot_name)
 
     return request, replaced_slots
+'''
+
+
+def replace_slots_in_request(request: str, all_slots):
+    # slot = (intent_name, slot_name, slot_value)
+    for slot in all_slots:
+        if request_contains_slot(request, slot[2]):
+            request = request.replace(slot[2], slot[1])
+
+    return request
+
+
+def replace_slots_in_request_and_get_slots(request: str, all_slots):
+    replaced_slots = {}
+    # slot = (intent_name, slot_name, slot_value)
+    for slot in all_slots:
+        slot_name = slot[1]
+        slot_value = slot[2]
+        if request_contains_slot(request, slot_value):
+            if slot_name not in replaced_slots:
+                replaced_slots[slot_name] = []
+            replaced_slots[slot_name].append(slot_value)
+            request = request.replace(slot_value, slot_name)
+
+    return request, replaced_slots
+
+
+def request_contains_slot(request, slot):
+    if slot not in request:
+        return False
+    before, value, after = request.partition(slot)
+    if last_char_or_empty(before).isalpha() or first_char_or_empty(after).isalpha():
+        return False
+    return True
+
+
+def last_char_or_empty(string: str):
+    if string:
+        return string[-1]
+    return ''
+
+
+def first_char_or_empty(string: str):
+    if string:
+        return string[0]
+    return ''
 
 
 def get_percent(part, whole) -> float:
     return float(part) / whole
+
+
+def contains_only_numbers(string: str):
+    for char in string:
+        if char not in const.NUMBERS:
+            return False
+    return True

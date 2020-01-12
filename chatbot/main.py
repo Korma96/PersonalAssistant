@@ -4,7 +4,6 @@ import chatbot.code.model_service as ms
 from chatbot.code.assistant import Assistant
 from os import path
 import chatbot.code.settings as s
-import sys
 import chatbot.code.helpers as helpers
 from chatbot.code.percent_tracker import PercentTracker
 
@@ -17,13 +16,13 @@ def get_assistant():
         all_words, train_x, train_y = ds.load_training_data(s.train_data_path)
     else:
         if not path.exists(s.requests_path):
-            df.format(input_path=s.original_train_data_path,
-                      intents_output_path=s.intents_path,
-                      requests_output_path=s.requests_path,
-                      slots_output_path=s.slots_path,
-                      intent_config=intent_config)
+            df.format_dataset(input_path=s.original_train_data_path,
+                              intents_output_path=s.intents_path,
+                              requests_output_path=s.requests_path,
+                              slots_output_path=s.slots_path,
+                              intent_config=intent_config)
 
-        tokenized_requests, all_words = ds.process_intent_data(requests_path=s.requests_path)
+        tokenized_requests, all_words = ds.process_requests(requests_path=s.requests_path)
         train_x, train_y = ds.create_training_data(tokenized_requests=tokenized_requests,
                                                    intent_names=list(intent_config.keys()),
                                                    all_words=all_words)
@@ -39,10 +38,8 @@ def get_assistant():
         model = ms.create_model([None, len(train_x[0])], len(train_y[0]))
         model.load('data/model.tflearn')
     except Exception:
-        exc_info = sys.exc_info()
-        print(exc_info)
         model = ms.create_model([None, len(train_x[0])], len(train_y[0]))
-        model.fit(train_x, train_y, n_epoch=50, batch_size=8)
+        model.fit(train_x, train_y, n_epoch=10, batch_size=8)
         model.save('data/model.tflearn')
 
     return Assistant(model=model, intent_config=intent_config, all_words=all_words, slots=slots)
@@ -74,7 +71,6 @@ def test_accuracy(assistant: Assistant):
     test_acc = get_accuracy(assistant, s.original_test_data_path)
     eval_acc = get_accuracy(assistant, s.original_eval_data_path)
     print('Train acc: ' + str(train_acc) + '\nTest acc: ' + str(test_acc) + '\nEval acc: ' + str(eval_acc))
-    print('')
 
 
 def manual_test(assistant: Assistant):
@@ -90,4 +86,4 @@ def manual_test(assistant: Assistant):
 
 if __name__ == '__main__':
     assistant = get_assistant()
-    test_accuracy(assistant)
+    manual_test(assistant)
