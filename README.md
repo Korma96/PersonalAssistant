@@ -3,6 +3,14 @@
  Custom personal assistant for recognizing crud operations on alarms and reminders.
  Its output can be used as input for some alarm or calendar api.
  
+ Here is an example of using a chatbot:
+ 
+ ![alt text](https://github.com/Korma96/PersonalAssistant/blob/master/example.jpg)
+ 1. User input
+ 2. Intent, probability
+ 3. User input with replaced slots
+ 4. Recognized slots
+ 5. Chatbot's answer
  
 ## Prerequisites
 - Python 3.7
