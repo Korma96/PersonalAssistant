@@ -79,4 +79,4 @@ def manual_test(assistant: Assistant):
 
 if __name__ == '__main__':
     assistant = get_assistant()
-    test_accuracy(assistant)
+    manual_test(assistant)
