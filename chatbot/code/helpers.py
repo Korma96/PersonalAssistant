@@ -25,7 +25,6 @@ def create_bag_of_words(request_words: list, all_words: list):
         for index, word in enumerate(all_words):
             if word == request_word:
                 bag[index] = 1
-    # TODO: what if word is not found in all words ?
     return np.array(bag)
 
 
@@ -89,23 +88,6 @@ def normalize_string(string: str):
             string = string.replace(num, const.NUMERIC)
     # 3) remove unnecessary whitespaces
     return ' '.join(string.split())
-
-'''
-def replace_slots_in_request(request: str, all_slots):
-    replaced_slots = {}
-    request_split = request.split()
-    # slot = (intent_name, slot_name, slot_value)
-    for slot in all_slots:
-        slot_name = slot[1]
-        slot_value = slot[2]
-        if slot_value in request_split:
-            if slot_name not in replaced_slots:
-                replaced_slots[slot_name] = []
-            replaced_slots[slot_name].append(slot_value)
-            request = request.replace(slot_value, slot_name)
-
-    return request, replaced_slots
-'''
 
 
 def replace_slots_in_request(request: str, all_slots):

@@ -14,3 +14,14 @@ def create_model(train_x_data_shape, train_y_data_shape):
 
     # Define model
     return tflearn.DNN(net)
+
+
+def get_model(train_x, train_y):
+    try:
+        model = create_model([None, len(train_x[0])], len(train_y[0]))
+        model.load('data/model.tflearn')
+    except Exception:
+        model = create_model([None, len(train_x[0])], len(train_y[0]))
+        model.fit(train_x, train_y, n_epoch=50, batch_size=64)
+        model.save('data/model.tflearn')
+    return model

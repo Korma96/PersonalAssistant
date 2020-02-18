@@ -33,21 +33,14 @@ def get_assistant():
 
     slots = helpers.read_json_from_file(s.slots_path)
 
-    # get model
-    try:
-        model = ms.create_model([None, len(train_x[0])], len(train_y[0]))
-        model.load('data/model.tflearn')
-    except Exception:
-        model = ms.create_model([None, len(train_x[0])], len(train_y[0]))
-        model.fit(train_x, train_y, n_epoch=10, batch_size=8)
-        model.save('data/model.tflearn')
+    model = ms.get_model(train_x, train_y)
 
     return Assistant(model=model, intent_config=intent_config, all_words=all_words, slots=slots)
 
 
 def get_accuracy(assistant: Assistant, original_path):
     intent_config = helpers.read_json_from_file(s.intents_config_path)
-    test_data = ds.get_test_data(original_path, list(intent_config.keys()))
+    test_data = df.format_dataset(original_path, intent_config, is_test_mode=True)
     request_count = len(test_data)
     success_counter = 0
     failure_counter = 0
@@ -86,4 +79,4 @@ def manual_test(assistant: Assistant):
 
 if __name__ == '__main__':
     assistant = get_assistant()
-    manual_test(assistant)
+    test_accuracy(assistant)

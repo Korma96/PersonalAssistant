@@ -81,23 +81,3 @@ def load_training_data(path):
     train_y = data['train_y']
     return all_words, train_x, train_y
 
-
-def get_test_data(original_test_data_path, intent_names: list):
-    with open(original_test_data_path, 'r') as tsv_file:
-        lines = tsv_file.readlines()
-
-    result = []
-    num_of_columns = len(lines[0].split('\t'))
-    # intent \t slots \t request \t lang \t tokens
-    for line in lines:
-        parsed_line = line.split('\t')
-        if len(parsed_line) != num_of_columns:
-            raise Exception('invalid number of columns')
-
-        intent_name = parsed_line[0]
-        if intent_name in intent_names:
-            request = parsed_line[2]
-            if request and helpers.is_request_valid(request, intent_name):
-                result.append((intent_name, request))
-
-    return result

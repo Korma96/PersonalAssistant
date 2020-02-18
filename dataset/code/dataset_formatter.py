@@ -6,7 +6,7 @@ import csv
 import chatbot.code.settings as settings
 
 
-def format_dataset(input_path, intents_output_path, requests_output_path, slots_output_path, intent_config):
+def format_dataset(input_path, intent_config, intents_output_path='', requests_output_path='', slots_output_path='', is_test_mode=False):
     with open(input_path, 'r') as tsv_file:
         lines = tsv_file.readlines()
 
@@ -16,6 +16,9 @@ def format_dataset(input_path, intents_output_path, requests_output_path, slots_
     num_of_columns = len(lines[0].split('\t'))
     for line in lines:
         _parse_line(line, num_of_columns, intent_config, all_slots, all_requests, invalid_data)
+
+    if is_test_mode:
+        return all_requests
 
     invalid_data.sort(key=lambda x: x.message, reverse=True)
     with open(settings.invalid_data_path, 'wt') as out_file:
