@@ -11,3 +11,39 @@
   ]
  }
 }
+-------------------------------------------
+{
+ "original": "create alarm for tomorrow morning",
+ "normalized": "create alarm for tomorrow morning",
+ "with_replaced_slots": "create alarm datetime",
+ "replaced_slots": {
+  "datetime": [
+   "for tomorrow morning"
+  ]
+ }
+}
+-------------------------------------------
+{
+ "original": "create alarm for tomorrow morning",
+ "normalized": "create alarm for tomorrow morning",
+ "with_replaced_slots": "create alarm datetime",
+ "replaced_slots": {
+  "datetime": [
+   "for tomorrow morning"
+  ]
+ }
+}
+-------------------------------------------
+{
+ "original": "show me alarms",
+ "normalized": "show me alarms",
+ "with_replaced_slots": "show me alarms",
+ "replaced_slots": {}
+}
+-------------------------------------------
+{
+ "original": "delete my last reminder",
+ "normalized": "delete my last reminder",
+ "with_replaced_slots": "delete my last reminder",
+ "replaced_slots": {}
+}
